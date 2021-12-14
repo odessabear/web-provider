@@ -1,4 +1,4 @@
-package com.webprovider.webprovider;
+package com.odebar.webprovider.servlet;
 
 import java.io.*;
 import javax.servlet.http.*;
