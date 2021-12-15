@@ -16,7 +16,7 @@ public class AllTariffsController extends AbstractController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        List<Tariff> tariffs = Collections.emptyList(); //get Tariffs from database
+        List<Tariff> tariffs = getBusinessService().getTariffs();
         req.setAttribute("tariffs", tariffs);
         RoutingUtils.forwardToPage("tariffs.jsp", req, resp);
     }

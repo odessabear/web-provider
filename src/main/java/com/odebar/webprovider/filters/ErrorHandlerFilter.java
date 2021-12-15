@@ -1,4 +1,4 @@
-package com.odebar.webprovider.filter;
+package com.odebar.webprovider.filters;
 
 import com.odebar.webprovider.util.RoutingUtils;
 
