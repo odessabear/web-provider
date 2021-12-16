@@ -1,12 +1,13 @@
 -- these commands remove all tables from the database
+-- netstat -ano | findstr 8080
 -- it implies an error if tables not exist in DB, just ignore it
-DROP table if exists orders_items;
-DROP table if exists tariffs;
-DROP table if exists orders;
-DROP table if exists categories;
-DROP table if exists statuses;
-DROP table if exists users;
-DROP table if exists roles;
+-- DROP table if exists orders_items;
+-- DROP table if exists tariffs;
+-- DROP table if exists orders;
+-- DROP table if exists categories;
+-- DROP table if exists statuses;
+-- DROP table if exists users;
+-- DROP table if exists roles;
 
 -- --------------------------------------------------------------
 -- ROLES
