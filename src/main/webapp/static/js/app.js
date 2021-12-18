@@ -1,6 +1,6 @@
 ;
-$(function() {
-    var init = function() {
+$(function () {
+    var init = function () {
         initBuyBtn();
         $('#addToCart').on("click", addTariffToCart);
         $('#addTariffPopup .count').on("change", calculateCost);
@@ -8,7 +8,7 @@ $(function() {
         $('.remove-tariff').on("click", removeTariffFromCart);
     };
 
-    var showAddTariffPopup = function() {
+    var showAddTariffPopup = function () {
         var idTariff = $(this).attr('data-id-tariff');
         var tariff = $('#tariff' + idTariff);
         $('#addTariffPopup').attr('data-id-tariff', idTariff);
@@ -25,15 +25,15 @@ $(function() {
             show: true
         });
     };
-    var initBuyBtn = function() {
+    var initBuyBtn = function () {
         $('.buy-btn').on("click", showAddTariffPopup);
     };
-    var addTariffToCart = function() {
+    var addTariffToCart = function () {
         var idTariff = $('#addTariffPopup').attr('data-id-tariff');
         var count = $('#addTariffPopup .count').val();
         $('#addToCart').addClass('hidden');
         $('#addToCartIndicator').removeClass('hidden');
-        setTimeout(function() {
+        setTimeout(function () {
             var data = {
                 totalCount: count,
                 totalCost: 2000
@@ -44,21 +44,27 @@ $(function() {
             $('#addTariffPopup').modal('hide');
         }, 800);
     };
-    var calculateCost = function() {
+    var calculateCost = function () {
         var priceStr = $('#addTariffPopup .price').text();
         var price = parseFloat(priceStr);
         var count = parseInt($('#addTariffPopup .count').val());
         var cost = price * count;
         $('#addTariffPopup .cost').text(cost);
     };
-    var loadMoreTariffs = function() {
+    var loadMoreTariffs = function () {
         $('#loadMore').addClass('hidden');
         $('#loadMoreIndicator').removeClass('hidden');
-        setTimeout(function() {
-            $('#loadMoreIndicator').addClass('hidden');
-            $('#loadMore').removeClass('hidden');
-        }, 800);
+        $.ajax({
+            url: '/ajax/html/more/tariffs',
+            success: function (html) {
+                $('#tariffList .text-center').prepend(html);
+                $('#loadMoreIndicator').addClass('hidden');
+                $('#loadMore').removeClass('hidden');
+            }
+        });
     };
+
+
     // var initsortingForm = function() {
     //     $('#allTariffs').on("click", function() {
     //         $('.tariffs .sorting-option').prop('checked', $(this).is(':checked'));
@@ -91,20 +97,20 @@ $(function() {
     //     }
     //     $('form.sorting').submit();
     // };
-    var confirm = function(msg, okFunction) {
+    var confirm = function (msg, okFunction) {
         if (window.confirm(msg)) {
             okFunction();
         }
     };
-    var removeTariffFromCart = function() {
+    var removeTariffFromCart = function () {
         var btn = $(this);
-        confirm('Are you sure?', function() {
+        confirm('Are you sure?', function () {
             executeRemoveTariff(btn);
         });
     };
-    var refreshTotalCost = function() {
+    var refreshTotalCost = function () {
         var total = 0;
-        $('#shoppingCart .item').each(function(index, value) {
+        $('#shoppingCart .item').each(function (index, value) {
             var count = parseInt($(value).find('.count').text());
             var price = parseFloat($(value).find('.price').text());
             var val = price * count;
@@ -112,7 +118,7 @@ $(function() {
         });
         $('#shoppingCart .total').text(total);
     };
-    var executeRemoveTariff = function(btn) {
+    var executeRemoveTariff = function (btn) {
         var idTariff = btn.attr('data-id-tariff');
         var count = btn.attr('data-count');
         btn.removeClass('btn-danger');
@@ -122,7 +128,7 @@ $(function() {
         btn.text('');
         btn.off('on', "click");
 
-        setTimeout(function() {
+        setTimeout(function () {
             var data = {
                 totalCount: 1,
                 totalCost: 1
