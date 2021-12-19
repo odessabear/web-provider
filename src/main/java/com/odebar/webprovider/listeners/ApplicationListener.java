@@ -18,7 +18,7 @@ public class ApplicationListener implements ServletContextListener {
         try {
             serviceManager = ServiceManager.getInstance(sce.getServletContext());
         } catch (RuntimeException e) {
-            LOGGER.error("Web application 'web-provider' init failed: " + e.getMessage(), e);
+            LOGGER.error("Web application 'web-provider' init is failed: " + e.getMessage(), e);
             throw e;
         }
         LOGGER.info("Web application 'web-provider' is initialized");

@@ -51,15 +51,38 @@ $(function () {
         var cost = price * count;
         $('#addTariffPopup .cost').text(cost);
     };
-    var loadMoreTariffs = function () {
-        $('#loadMore').addClass('hidden');
-        $('#loadMoreIndicator').removeClass('hidden');
+
+    var convertButtonToLoader = function (btn, btnClass) {
+        btn.removeClass(btnClass);
+        btn.removeClass('btn');
+        btn.addClass('load-indicator');
+        var text = btn.text();
+        btn.text('');
+        btn.attr('data-btn-text', text);
+        btn.off('click');
+    };
+    var convertLoaderToButton = function (btn, btnClass, actionClick) {
+        btn.removeClass('load-indicator');
+        btn.addClass('btn');
+        btn.addClass(btnClass);
+        btn.text(btn.attr('data-btn-text'));
+        btn.removeAttr('data-btn-text');
+        btn.click(actionClick);
+    };
+
+    var loadMoreTariffs = function (){
+        var btn = $('#loadMore');
+        convertButtonToLoader(btn, 'btn-success');
+        var url = '/ajax/html/more' + location.pathname + '?' + location.search.substring(1);
         $.ajax({
-            url: '/ajax/html/more/tariffs',
-            success: function (html) {
-                $('#tariffList .text-center').prepend(html);
-                $('#loadMoreIndicator').addClass('hidden');
-                $('#loadMore').removeClass('hidden');
+            url : url,
+            success : function(html) {
+                $('#tariffListList .text-center').prepend(html);
+                convertLoaderToButton(btn, 'btn-success', loadMoreTariffs);
+            },
+            error : function(data) {
+                convertLoaderToButton(btn, 'btn-success', loadMoreTariffs);
+                alert('Error');
             }
         });
     };
@@ -79,7 +102,7 @@ $(function () {
     //         $('#allTariffs').prop('checked', false);
     //     });
     // };
-    // var gosorting = function() {
+    // var goSorting = function() {
     //     var isAllSelected = function(selector) {
     //         var unchecked = 0;
     //         $(selector).each(function(index, value) {
