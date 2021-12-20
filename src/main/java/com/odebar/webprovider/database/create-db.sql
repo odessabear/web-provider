@@ -65,8 +65,7 @@ CREATE TABLE categories
 (
     id            SERIAL PRIMARY KEY    NOT NULL,
     name          VARCHAR(60) UNIQUE    NOT NULL,
-    url           CHARACTER VARYING(60) NOT NULL,
-    tariffs_count INTEGER DEFAULT (0)   NOT NULL
+    url           CHARACTER VARYING(60) NOT NULL
 );
 
 INSERT INTO categories
@@ -102,31 +101,31 @@ CREATE TABLE tariffs
 
 -- Internet
 INSERT INTO tariffs
-VALUES (DEFAULT, 'HomeNet', 'HomeNet Description', 'image_link', 155, 1); -- 1 (order id)
+VALUES (DEFAULT, 'HomeNet2', 'HomeNet2 Description', 'image_link', 175, 1); -- 1 (order id)
 INSERT INTO tariffs
-VALUES (DEFAULT, 'SpeedNet', 'SpeedNet Description', 'image_link', 185, 1); -- 2
+VALUES (DEFAULT, 'SpeedNet2', 'SpeedNet2 Description', 'image_link', 205, 1); -- 2
 INSERT INTO tariffs
-VALUES (DEFAULT, 'HighSpeedNet', 'HighSpeedNet Description', 'image_link', 220, 1);
+VALUES (DEFAULT, 'HighSpeedNet2', 'HighSpeedNet2 Description', 'image_link', 240, 1);
 -- 3
 -- Telephony
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Home60', 'Home60 Description', 'image_link', 70, 2); -- 4
+VALUES (DEFAULT, 'Home60_2', 'Home60_2 Description', 'image_link', 90, 2); -- 4
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Home100', 'Home100 Description', 'image_link', 50, 2); -- 5
+VALUES (DEFAULT, 'Home100_2', 'Home100_2 Description', 'image_link', 80, 2); -- 5
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Home300', 'Home300 Description', 'image_link', 100, 2);
+VALUES (DEFAULT, 'Home300_2', 'Home300_2 Description', 'image_link', 120, 2);
 -- 6
 -- IP-TV
 INSERT INTO tariffs
-VALUES (DEFAULT, 'IP-TV Basic', 'IP-TV Basic Description', 'image_link', 250, 3); -- 7
+VALUES (DEFAULT, 'IP-TV Basic_2', 'IP-TV Basic_2 Description', 'image_link', 270, 3); -- 7
 INSERT INTO tariffs
-VALUES (DEFAULT, 'IP-TV Advanced', 'IP-TV Advanced Description', 'image_link', 200, 3);
+VALUES (DEFAULT, 'IP-TV Advanced_2', 'IP-TV Advanced_2 Description', 'image_link', 220, 3);
 -- 8
 -- Cable TV
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Standard TV', 'Standard TV Description', 'image_link', 160, 4); -- 9
+VALUES (DEFAULT, 'Standard TV_2', 'Standard TV_2 Description', 'image_link', 180, 4); -- 9
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Digital TV', 'Digital TV Description', 'image_link', 260, 4);
+VALUES (DEFAULT, 'Digital TV_2', 'Digital TV_2 Description', 'image_link', 280, 4);
 
 
 
@@ -134,8 +133,7 @@ CREATE TABLE orders_items
 (
     id        SERIAL PRIMARY KEY              NOT NULL,
     order_id  INTEGER REFERENCES orders (id)  NOT NULL,
-    tariff_id INTEGER REFERENCES tariffs (id) NOT NULL,
-    count     INTEGER                         NOT NULL
+    tariff_id INTEGER REFERENCES tariffs (id) NOT NULL
 );
 
 -- --------------------------------------------------------------
@@ -147,8 +145,8 @@ CREATE TABLE orders_items
 -- FROM tariffs;
 -- SELECT *
 -- FROM orders;
--- SELECT *
--- FROM categories;
+SELECT *
+FROM categories;
 -- SELECT *
 -- FROM statuses;
 -- SELECT *

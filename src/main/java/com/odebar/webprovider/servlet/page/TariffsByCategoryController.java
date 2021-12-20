@@ -16,6 +16,6 @@ public class TariffsByCategoryController extends AbstractController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String categoryUrl = req.getRequestURI().substring(SUBSTRING_INDEX);
-        RoutingUtils.forwardToPage("tariffs", req, resp);
+        RoutingUtils.forwardToPage("tariffs.jsp", req, resp);
     }
 }

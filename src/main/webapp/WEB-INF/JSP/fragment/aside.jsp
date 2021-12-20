@@ -15,10 +15,10 @@
 <div id="serviceCatalog" class="panel panel-success collapse">
     <div class="panel-heading">Service Catalog</div>
     <div class="list-group">
-        <a href="${pageContext.request.contextPath}/tariffs/internet" class="list-group-item"><span class="badge">3</span>Internet</a>
-        <a href="${pageContext.request.contextPath}/tariffs/telephony" class="list-group-item"><span class="badge">3</span>Telephony</a>
-        <a href="${pageContext.request.contextPath}/tariffs/ip-tv" class="list-group-item"><span class="badge">3</span>IP-TV</a>
-        <a href="${pageContext.request.contextPath}/tariffs/cable-tv" class="list-group-item"><span class="badge">3</span>Cable TV</a>
+        <a href="${pageContext.request.contextPath}/tariffs/internet" class="list-group-item">Internet</a>
+        <a href="${pageContext.request.contextPath}/tariffs/telephony" class="list-group-item">Telephony</a>
+        <a href="${pageContext.request.contextPath}/tariffs/ip-tv" class="list-group-item">IP-TV</a>
+        <a href="${pageContext.request.contextPath}/tariffs/cable-tv" class="list-group-item">Cable TV</a>
     </div>
 </div>
 <!-- Sorting form -->

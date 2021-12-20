@@ -77,7 +77,7 @@ $(function () {
         $.ajax({
             url : url,
             success : function(html) {
-                $('#tariffListList .text-center').prepend(html);
+                $('#tariffsList .text-center').prepend(html);
                 convertLoaderToButton(btn, 'btn-success', loadMoreTariffs);
             },
             error : function(data) {

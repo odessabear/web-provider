@@ -42,7 +42,7 @@
     </table>
     <div class="row hidden-print">
         <div class="col-md-4 col-md-offset-4 col-lg-2 col-lg-offset-5">
-            <a href="login-page.html" class="btn btn-primary btn-block"> Sign in</a>
+            <a href="login-page.jsp" class="btn btn-primary btn-block"> Sign in</a>
         </div>
     </div>
 </div>
