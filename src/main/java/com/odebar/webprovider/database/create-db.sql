@@ -1,13 +1,13 @@
 -- these commands remove all tables from the database
 -- netstat -ano | findstr 8080
 -- it implies an error if tables not exist in DB, just ignore it
--- DROP table if exists orders_items;
--- DROP table if exists tariffs;
--- DROP table if exists orders;
--- DROP table if exists categories;
--- DROP table if exists statuses;
--- DROP table if exists users;
--- DROP table if exists roles;
+DROP table if exists orders_items;
+DROP table if exists tariffs;
+DROP table if exists orders;
+DROP table if exists categories;
+DROP table if exists statuses;
+DROP table if exists users;
+DROP table if exists roles;
 
 -- --------------------------------------------------------------
 -- ROLES
@@ -69,13 +69,13 @@ CREATE TABLE categories
 );
 
 INSERT INTO categories
-VALUES (1, 'Internet', 'Internet-Url');
+VALUES (1, 'Internet', '/internet');
 INSERT INTO categories
-VALUES (2, 'Telephony', 'Telephony-Url');
+VALUES (2, 'Telephony', '/telephony');
 INSERT INTO categories
-VALUES (3, 'IP-TV', 'IP-TV-Url');
+VALUES (3, 'IP-TV', '/ip-tv');
 INSERT INTO categories
-VALUES (4, 'Cable-TV', 'Cable-TV-Url');
+VALUES (4, 'Cable-TV', '/cable-tv');
 
 
 -- --------------------------------------------------------------
@@ -98,6 +98,34 @@ CREATE TABLE tariffs
     price         NUMERIC                            NOT NULL,
     categories_id INTEGER REFERENCES categories (id) NOT NULL
 );
+
+-- Internet
+INSERT INTO tariffs
+VALUES (DEFAULT, 'HomeNet', 'HomeNet Description', 'image_link', 155, 1); -- 1 (order id)
+INSERT INTO tariffs
+VALUES (DEFAULT, 'SpeedNet', 'SpeedNet Description', 'image_link', 1855, 1); -- 2
+INSERT INTO tariffs
+VALUES (DEFAULT, 'HighSpeedNet', 'HighSpeedNet Description', 'image_link', 220, 1);
+-- 3
+-- Telephony
+INSERT INTO tariffs
+VALUES (DEFAULT, 'Home60', 'Home60 Description', 'image_link', 70, 2); -- 4
+INSERT INTO tariffs
+VALUES (DEFAULT, 'Home100', 'Home100 Description', 'image_link', 110, 2); -- 5
+INSERT INTO tariffs
+VALUES (DEFAULT, 'Home300', 'Home300 Description', 'image_link', 130, 2);
+-- 6
+-- IP-TV
+INSERT INTO tariffs
+VALUES (DEFAULT, 'IP-TV Basic', 'IP-TV Basic Description', 'image_link', 210, 3); -- 7
+INSERT INTO tariffs
+VALUES (DEFAULT, 'IP-TV Advanced', 'IP-TV Advanced Description', 'image_link', 2300, 3);
+-- 8
+-- Cable TV
+INSERT INTO tariffs
+VALUES (DEFAULT, 'Standard TV', 'Standard TV Description', 'image_link', 160, 4); -- 9
+INSERT INTO tariffs
+VALUES (DEFAULT, 'Digital TV', 'Digital TV Description', 'image_link', 260, 4);
 
 -- Internet
 INSERT INTO tariffs
@@ -145,8 +173,8 @@ CREATE TABLE orders_items
 -- FROM tariffs;
 -- SELECT *
 -- FROM orders;
-SELECT *
-FROM categories;
+-- SELECT *
+-- FROM categories;
 -- SELECT *
 -- FROM statuses;
 -- SELECT *
