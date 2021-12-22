@@ -47,14 +47,14 @@ public class ShoppingCart implements Serializable {
     }
 
     private void validateProductCount(int count) {
-        if (count > Constants.MAX_PRODUCT_COUNT_PER_ONE_SHOPPING_CART) {
+        if (count > Constants.MAX_TARIFF_COUNT_PER_ONE_SHOPPING_CART) {
             throw new ValidationException("Limit for product count reached: count=" + count);
         }
     }
 
     private void validateShoppingCartSize(int idProduct) {
-        if (tariffs.size() > Constants.MAX_DIFFERENT_PRODUCTS_PER_SHOPPING_CART ||
-                (tariffs.size() == Constants.MAX_DIFFERENT_PRODUCTS_PER_SHOPPING_CART && !tariffs.containsKey(idProduct))) {
+        if (tariffs.size() > Constants.MAX_DIFFERENT_TARIFFS_PER_SHOPPING_CART ||
+                (tariffs.size() == Constants.MAX_DIFFERENT_TARIFFS_PER_SHOPPING_CART && !tariffs.containsKey(idProduct))) {
             throw new ValidationException("Limit for ShoppingCart size reached: size=" + tariffs.size());
         }
     }

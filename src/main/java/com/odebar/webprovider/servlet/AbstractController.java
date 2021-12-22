@@ -18,7 +18,7 @@ public abstract class AbstractController extends HttpServlet {
         orderService = ServiceManager.getInstance(getServletContext()).getOrderService();
     }
 
-    public final TariffsService getProductService() {
+    public final TariffsService getTariffService() {
         return productService;
     }
 
