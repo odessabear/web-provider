@@ -4,6 +4,7 @@ import com.odebar.webprovider.exception.InternalServerErrorException;
 import com.odebar.webprovider.jdbc.JDBCUtils;
 import com.odebar.webprovider.jdbc.ResultSetHandler;
 import com.odebar.webprovider.jdbc.ResultSetHandlerFactory;
+import com.odebar.webprovider.repository.entity.Category;
 import com.odebar.webprovider.repository.entity.Tariff;
 import com.odebar.webprovider.services.TariffsService;
 
@@ -16,6 +17,8 @@ class TariffsServiceImpl implements TariffsService {
 
     private static final ResultSetHandler<List<Tariff>> tariffResultSetHandler =
             ResultSetHandlerFactory.getListResultSetHandler(ResultSetHandlerFactory.TARIFF_RESULT_SET_HANDLER);
+    private static final ResultSetHandler<List<Category>> categoriesListResultSetHandler =
+            ResultSetHandlerFactory.getListResultSetHandler(ResultSetHandlerFactory.CATEGORIES_RESULT_SET_HANDLER);
 
     private final DataSource dataSource;
 
@@ -27,8 +30,28 @@ class TariffsServiceImpl implements TariffsService {
     public List<Tariff> tariffsList(int page, int limit) {
         try (Connection connection = dataSource.getConnection()) {
             int offset = (page - 1) * limit;
-            return JDBCUtils.select(connection, "select t.*, c.name as category, from tariff t, category c" +
-                    "where c.id=t.id_category limit ? offset ?", tariffResultSetHandler, limit, offset);
+            return JDBCUtils.select(connection, "select t.*, c.name as category from tariffs t, categories c " +
+                    "where c.id=t.categories_id limit ? offset ?", tariffResultSetHandler, limit, offset);
+        } catch (SQLException e) {
+            throw new InternalServerErrorException("Can't execute sql query: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<Tariff> tariffsListByCategory(String categoryUrl, int page, int limit) {
+        try (Connection connection = dataSource.getConnection()) {
+            int offset = (page - 1) * limit;
+            return JDBCUtils.select(connection, "select t.*, c.name as category from tariffs t, categories c " +
+                    "where c.url=? and c.id=t.categories_id order by t.id limit ? offset ?", tariffResultSetHandler, categoryUrl, limit, offset);
+        } catch (SQLException e) {
+            throw new InternalServerErrorException("Can't execute sql query: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<Category> categoriesList() {
+        try (Connection connection = dataSource.getConnection()) {
+            return JDBCUtils.select(connection, "select * from category order by id", categoriesListResultSetHandler);
         } catch (SQLException e) {
             throw new InternalServerErrorException("Can't execute sql query: " + e.getMessage(), e);
         }

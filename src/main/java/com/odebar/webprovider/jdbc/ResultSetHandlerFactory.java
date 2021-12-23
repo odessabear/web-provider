@@ -1,5 +1,6 @@
 package com.odebar.webprovider.jdbc;
 
+import com.odebar.webprovider.repository.entity.Category;
 import com.odebar.webprovider.repository.entity.Tariff;
 
 import java.sql.ResultSet;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class ResultSetHandlerFactory {
 
-    public static ResultSetHandler<Tariff> TARIFF_RESULT_SET_HANDLER = resultSet -> {
+    public static final ResultSetHandler<Tariff> TARIFF_RESULT_SET_HANDLER = resultSet -> {
         Tariff tariff = new Tariff();
         tariff.setId(resultSet.getInt("id"));
         tariff.setName(resultSet.getString("name"));
@@ -18,6 +19,14 @@ public class ResultSetHandlerFactory {
         tariff.setImageLink(resultSet.getString("image_link"));
         tariff.setPrice(resultSet.getBigDecimal("price"));
         return tariff;
+    };
+
+    public static final ResultSetHandler<Category> CATEGORIES_RESULT_SET_HANDLER = resultSet -> {
+        Category category = new Category();
+        category.setId(resultSet.getInt("id"));
+        category.setName(resultSet.getString("name"));
+        category.setUrl(resultSet.getString("url"));
+        return category;
     };
 
     public static <T> ResultSetHandler<T> getSingleResultSetHandler(final ResultSetHandler<T> oneRowResultSetHandler) {

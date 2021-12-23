@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Odessa_Bear
@@ -15,10 +16,12 @@
 <div id="serviceCatalog" class="panel panel-success collapse">
     <div class="panel-heading">Service Catalog</div>
     <div class="list-group">
-        <a href="${pageContext.request.contextPath}/tariffs/internet" class="list-group-item">Internet</a>
-        <a href="${pageContext.request.contextPath}/tariffs/telephony" class="list-group-item">Telephony</a>
-        <a href="${pageContext.request.contextPath}/tariffs/ip-tv" class="list-group-item">IP-TV</a>
-        <a href="${pageContext.request.contextPath}/tariffs/cable-tv" class="list-group-item">Cable TV</a>
+        <c:forEach var="category" items="${CATEGORIES_LIST}">
+            <a href="${pageContext.request.contextPath}/tariffs${category.url}"
+               class="list-group-item ${selectedCategoryUrl == category.url ? 'active' : '' }">
+                    ${category.name}
+            </a>
+        </c:forEach>
     </div>
 </div>
 <!-- Sorting form -->
