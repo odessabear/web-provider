@@ -6,6 +6,7 @@ import com.odebar.webprovider.services.serviceImpl.ServiceManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
 public abstract class AbstractController extends HttpServlet {
 
@@ -24,5 +25,21 @@ public abstract class AbstractController extends HttpServlet {
 
     public final OrderService getOrderService() {
         return orderService;
+    }
+
+    public final int getPageCount(int totalCount, int itemsPerPage) {
+        int result = totalCount / itemsPerPage;
+        if (result * itemsPerPage != totalCount) {
+            result++;
+        }
+        return result;
+    }
+
+    public final int getPage(HttpServletRequest request) {
+        try {
+            return Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException e) {
+            return 1;
+        }
     }
 }

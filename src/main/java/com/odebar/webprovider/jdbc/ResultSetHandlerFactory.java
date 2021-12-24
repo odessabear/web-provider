@@ -29,6 +29,19 @@ public class ResultSetHandlerFactory {
         return category;
     };
 
+    public static final ResultSetHandler<Integer> getCountResultSetHandler() {
+        return new ResultSetHandler<Integer>() {
+            @Override
+            public Integer handle(ResultSet resultSet) throws SQLException {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                } else {
+                    return 0;
+                }
+            }
+        };
+    }
+
     public static <T> ResultSetHandler<T> getSingleResultSetHandler(final ResultSetHandler<T> oneRowResultSetHandler) {
         return rs -> {
             if (rs.next()) {

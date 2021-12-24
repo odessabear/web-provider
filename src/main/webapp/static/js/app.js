@@ -28,6 +28,7 @@ $(function () {
     var initBuyBtn = function () {
         $('.buy-btn').on("click", showAddTariffPopup);
     };
+
     var addTariffToCart = function () {
         var idTariff = $('#addTariffPopup').attr('data-id-tariff');
         var count = $('#addTariffPopup .count').val();
@@ -44,6 +45,7 @@ $(function () {
             $('#addTariffPopup').modal('hide');
         }, 800);
     };
+
     var calculateCost = function () {
         var priceStr = $('#addTariffPopup .price').text();
         var price = parseFloat(priceStr);
@@ -73,12 +75,20 @@ $(function () {
     var loadMoreTariffs = function (){
         var btn = $('#loadMore');
         convertButtonToLoader(btn, 'btn-success');
-        var url = '/ajax/html/more' + location.pathname + '?' + location.search.substring(1);
+        var pageNumber = parseInt($('#tariffsList').attr('data-page-number'));
+        var url = '/ajax/html/more' + location.pathname + '?page=' + (pageNumber + 1) + '&' + location.search.substring(1);
         $.ajax({
             url : url,
             success : function(html) {
-                $('#tariffsList .text-center').prepend(html);
-                convertLoaderToButton(btn, 'btn-success', loadMoreTariffs);
+                $('#tariffsList .row').append(html);
+                pageNumber++;
+                var pageCount = parseInt($('#tariffsList').attr('data-page-count'));
+                $('#tariffsList').attr('data-page-number', pageNumber);
+                if(pageNumber < pageCount) {
+                    convertLoaderToButton(btn, 'btn-success', loadMoreTariffs);
+                } else {
+                    btn.remove();
+                }
             },
             error : function(data) {
                 convertLoaderToButton(btn, 'btn-success', loadMoreTariffs);
@@ -125,12 +135,14 @@ $(function () {
             okFunction();
         }
     };
+
     var removeTariffFromCart = function () {
         var btn = $(this);
         confirm('Are you sure?', function () {
             executeRemoveTariff(btn);
         });
     };
+
     var refreshTotalCost = function () {
         var total = 0;
         $('#shoppingCart .item').each(function (index, value) {
@@ -141,6 +153,7 @@ $(function () {
         });
         $('#shoppingCart .total').text(total);
     };
+
     var executeRemoveTariff = function (btn) {
         var idTariff = btn.attr('data-id-tariff');
         var count = btn.attr('data-count');

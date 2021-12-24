@@ -7,7 +7,9 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
+@WebListener
 public class WebProviderApplicationListener implements ServletContextListener {
     public static final Logger LOGGER = LogManager.getLogger(WebProviderApplicationListener.class);
 

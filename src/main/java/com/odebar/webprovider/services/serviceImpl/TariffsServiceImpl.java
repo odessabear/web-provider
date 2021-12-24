@@ -19,6 +19,7 @@ class TariffsServiceImpl implements TariffsService {
             ResultSetHandlerFactory.getListResultSetHandler(ResultSetHandlerFactory.TARIFF_RESULT_SET_HANDLER);
     private static final ResultSetHandler<List<Category>> categoriesListResultSetHandler =
             ResultSetHandlerFactory.getListResultSetHandler(ResultSetHandlerFactory.CATEGORIES_RESULT_SET_HANDLER);
+    public static final ResultSetHandler<Integer> countResultSetHandler = ResultSetHandlerFactory.getCountResultSetHandler();
 
     private final DataSource dataSource;
 
@@ -31,7 +32,16 @@ class TariffsServiceImpl implements TariffsService {
         try (Connection connection = dataSource.getConnection()) {
             int offset = (page - 1) * limit;
             return JDBCUtils.select(connection, "select t.*, c.name as category from tariffs t, categories c " +
-                    "where c.id=t.categories_id limit ? offset ?", tariffResultSetHandler, limit, offset);
+                    "where c.id=t.categories_id order by t.id limit ? offset ?", tariffResultSetHandler, limit, offset);
+        } catch (SQLException e) {
+            throw new InternalServerErrorException("Can't execute sql query: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public int countAllTariffs() {
+        try (Connection connection = dataSource.getConnection()) {
+            return JDBCUtils.select(connection, "select count(*) from tariffs", countResultSetHandler);
         } catch (SQLException e) {
             throw new InternalServerErrorException("Can't execute sql query: " + e.getMessage(), e);
         }
@@ -49,9 +59,14 @@ class TariffsServiceImpl implements TariffsService {
     }
 
     @Override
+    public int countAllTariffsByCategory(String categoryUrl) {
+        return 0;
+    }
+
+    @Override
     public List<Category> categoriesList() {
         try (Connection connection = dataSource.getConnection()) {
-            return JDBCUtils.select(connection, "select * from category order by id", categoriesListResultSetHandler);
+            return JDBCUtils.select(connection, "select * from categories order by id", categoriesListResultSetHandler);
         } catch (SQLException e) {
             throw new InternalServerErrorException("Can't execute sql query: " + e.getMessage(), e);
         }

@@ -20,6 +20,8 @@ public class AllTariffsController extends AbstractController {
             throws ServletException, IOException {
         List<Tariff> tariffs = getTariffService().tariffsList(1, Constants.MAX_TARIFFS_PER_ONE_HTML_PAGE);
         req.setAttribute("tariffs", tariffs);
+        int totalCount = getTariffService().countAllTariffs();
+        req.setAttribute("pageCount", getPageCount(totalCount, Constants.MAX_TARIFFS_PER_ONE_HTML_PAGE));
         RoutingUtils.forwardToPage("tariffs.jsp", req, resp);
     }
 }

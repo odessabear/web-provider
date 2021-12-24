@@ -16,7 +16,7 @@ import java.util.List;
 public class LoadMoreTariffsController extends AbstractController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Tariff> tariffs = getTariffService().tariffsList(2, Constants.MAX_TARIFFS_PER_ONE_HTML_PAGE);
+        List<Tariff> tariffs = getTariffService().tariffsList(getPage(req), Constants.MAX_TARIFFS_PER_ONE_HTML_PAGE);
         req.setAttribute("tariffs", tariffs);
         RoutingUtils.forwardToFragment("tariffs-list.jsp", req, resp);
     }
