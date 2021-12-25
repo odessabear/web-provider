@@ -1,28 +1,30 @@
 package com.odebar.webprovider.repository.model;
 
+import com.odebar.webprovider.repository.entity.Tariff;
+
 import java.io.Serializable;
 
 public class ShoppingCartItem implements Serializable {
 
-    private int idTariff;
+    private Tariff tariff;
     private int count;
 
     public ShoppingCartItem() {
         super();
     }
 
-    public ShoppingCartItem(int idProduct, int count) {
+    public ShoppingCartItem(Tariff tariff, int count) {
         super();
-        this.idTariff = idProduct;
+        this.tariff = tariff;
         this.count = count;
     }
 
-    public int getIdTariff() {
-        return idTariff;
+    public Tariff getTariff() {
+        return tariff;
     }
 
-    public void setIdTariff(int idTariff) {
-        this.idTariff = idTariff;
+    public void setTariff(Tariff tariff) {
+        this.tariff = tariff;
     }
 
     public int getCount() {
@@ -35,6 +37,6 @@ public class ShoppingCartItem implements Serializable {
 
     @Override
     public String toString() {
-        return "ShoppingCartItem [idProduct=" + idTariff + ", count=" + count + "]";
+        return String.format("ShoppingCartItem [tariff=%s, count=%s]", tariff, count);
     }
 }

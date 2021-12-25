@@ -63,9 +63,9 @@ VALUES (3, 'closed');
 
 CREATE TABLE categories
 (
-    id            SERIAL PRIMARY KEY    NOT NULL,
-    name          VARCHAR(60) UNIQUE    NOT NULL,
-    url           CHARACTER VARYING(60) NOT NULL
+    id   SERIAL PRIMARY KEY    NOT NULL,
+    name VARCHAR(60) UNIQUE    NOT NULL,
+    url  CHARACTER VARYING(60) NOT NULL
 );
 
 INSERT INTO categories
@@ -83,8 +83,8 @@ VALUES (4, 'Cable-TV', '/cable-tv');
 -- --------------------------------------------------------------
 CREATE TABLE orders
 (
-    id      SERIAL PRIMARY KEY            NOT NULL,
-    user_id INTEGER REFERENCES users (id) NOT NULL,
+    id      SERIAL PRIMARY KEY                           NOT NULL,
+    user_id INTEGER REFERENCES users (id)                NOT NULL,
     created TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT now() NOT NULL
 );
 
@@ -129,11 +129,11 @@ VALUES (DEFAULT, 'Digital TV', 'Digital TV Description', 'image_link', 260, 4);
 
 -- Internet
 INSERT INTO tariffs
-VALUES (DEFAULT, 'HomeNet2', 'HomeNet2 Description', 'image_link', 175, 1); -- 1 (order id)
+VALUES (DEFAULT, 'HomeNet_2', 'HomeNet_2 Description', 'image_link', 175, 1); -- 1 (order id)
 INSERT INTO tariffs
-VALUES (DEFAULT, 'SpeedNet2', 'SpeedNet2 Description', 'image_link', 205, 1); -- 2
+VALUES (DEFAULT, 'SpeedNet_2', 'SpeedNet_2 Description', 'image_link', 205, 1); -- 2
 INSERT INTO tariffs
-VALUES (DEFAULT, 'HighSpeedNet2', 'HighSpeedNet2 Description', 'image_link', 240, 1);
+VALUES (DEFAULT, 'HighSpeedNet_2', 'HighSpeedNet_2 Description', 'image_link', 240, 1);
 -- 3
 -- Telephony
 INSERT INTO tariffs
@@ -161,7 +161,8 @@ CREATE TABLE orders_items
 (
     id        SERIAL PRIMARY KEY              NOT NULL,
     order_id  INTEGER REFERENCES orders (id)  NOT NULL,
-    tariff_id INTEGER REFERENCES tariffs (id) NOT NULL
+    tariff_id INTEGER REFERENCES tariffs (id) NOT NULL,
+    count     INTEGER                         NOT NULL
 );
 
 -- --------------------------------------------------------------

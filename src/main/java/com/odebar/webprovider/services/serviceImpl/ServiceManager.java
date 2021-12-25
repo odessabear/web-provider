@@ -47,7 +47,7 @@ public class ServiceManager {
         loadApplicationProperties();
         dataSource = createDataSource();
         tariffService = new TariffsServiceImpl(dataSource);
-        orderService = new OrderServiceImpl();
+        orderService = new OrderServiceImpl(dataSource);
     }
 
     private BasicDataSource createDataSource() {

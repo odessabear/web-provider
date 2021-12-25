@@ -1,7 +1,10 @@
 package com.odebar.webprovider.filters;
 
+import com.odebar.webprovider.form.TariffForm;
 import com.odebar.webprovider.repository.model.ShoppingCart;
 import com.odebar.webprovider.repository.model.ShoppingCartItem;
+import com.odebar.webprovider.services.OrderService;
+import com.odebar.webprovider.services.serviceImpl.ServiceManager;
 import com.odebar.webprovider.util.SessionUtils;
 
 import javax.servlet.*;
@@ -15,6 +18,12 @@ import java.io.IOException;
 public class AutoRestoreShoppingCartFilter extends AbstractFilter {
     private static final String SHOPPING_CARD_DESERIALIZATION_DONE = "SHOPPING_CARD_DESERIALIZATION_DONE";
 
+    private OrderService orderService;
+
+    @Override
+    public void init(FilterConfig filterConfig) {
+        orderService = ServiceManager.getInstance(filterConfig.getServletContext()).getOrderService();
+    }
 
     @Override
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -33,10 +42,6 @@ public class AutoRestoreShoppingCartFilter extends AbstractFilter {
     }
 
     protected ShoppingCart shoppingCartFromString(String cookieValue) {
-        return getShoppingCart(cookieValue);
-    }
-
-    public static ShoppingCart getShoppingCart(String cookieValue) {
         ShoppingCart shoppingCart = new ShoppingCart();
         String[] items = cookieValue.split("\\|");
         for (String item : items) {
@@ -44,7 +49,7 @@ public class AutoRestoreShoppingCartFilter extends AbstractFilter {
             try {
                 int idTariff = Integer.parseInt(data[0]);
                 int count = Integer.parseInt(data[1]);
-                shoppingCart.addTariff(idTariff, count);
+                orderService.addTariffToShoppingCart(new TariffForm(idTariff, count), shoppingCart);
             } catch (RuntimeException e) {
                 e.printStackTrace();
             }
@@ -52,16 +57,16 @@ public class AutoRestoreShoppingCartFilter extends AbstractFilter {
         return shoppingCart;
     }
 
-    protected String shoppingCartToString(ShoppingCart shoppingCart) {
-        StringBuilder res = new StringBuilder();
-        for (ShoppingCartItem shoppingCartItem : shoppingCart.getItems()) {
-            res.append(shoppingCartItem.getIdTariff()).append("-").append(shoppingCartItem.getCount()).append("|");
-        }
-        if (res.length() > 0) {
-            res.deleteCharAt(res.length() - 1);
-        }
-        return res.toString();
-    }
+//    protected String shoppingCartToString(ShoppingCart shoppingCart) {
+//        StringBuilder res = new StringBuilder();
+//        for (ShoppingCartItem shoppingCartItem : shoppingCart.getItems()) {
+//            res.append(shoppingCartItem.getTariff()).append("-").append(shoppingCartItem.getCount()).append("|");
+//        }
+//        if (res.length() > 0) {
+//            res.deleteCharAt(res.length() - 1);
+//        }
+//        return res.toString();
+//    }
 
     /*
     ShoppingCart shoppingCart = SessionUtils.getCurrentShoppingCart(req);
