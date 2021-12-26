@@ -1,5 +1,6 @@
 package com.odebar.webprovider.servlet;
 
+import com.odebar.webprovider.form.TariffForm;
 import com.odebar.webprovider.services.OrderService;
 import com.odebar.webprovider.services.TariffsService;
 import com.odebar.webprovider.services.serviceImpl.ServiceManager;
@@ -41,5 +42,12 @@ public abstract class AbstractController extends HttpServlet {
         } catch (NumberFormatException e) {
             return 1;
         }
+    }
+
+    public final TariffForm createTariffForm(HttpServletRequest request) {
+        return new TariffForm(
+                Integer.parseInt(request.getParameter("idTariff")),
+                Integer.parseInt(request.getParameter("count"))
+        );
     }
 }

@@ -1,5 +1,7 @@
 package com.odebar.webprovider.util;
 
+import org.json.JSONObject;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +26,12 @@ public final class RoutingUtils {
         resp.getWriter().close();
     }
 
+    public static void sendJSON(JSONObject jsonObject, HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        resp.setContentType("application/json");
+        resp.getWriter().println(jsonObject.toString());
+        resp.getWriter().close();
+    }
     public static void redirect(String url, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.sendRedirect(url);
     }

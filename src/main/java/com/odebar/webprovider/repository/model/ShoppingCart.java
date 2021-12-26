@@ -21,20 +21,20 @@ public class ShoppingCart implements Serializable {
         validateShoppingCartSize(tariff.getId());
         ShoppingCartItem shoppingCartItem = tariffs.get(tariff.getId());
         if (shoppingCartItem == null) {
-            validateProductCount(count);
+            validateTariffCount(count);
             shoppingCartItem = new ShoppingCartItem(tariff, count);
             tariffs.put(tariff.getId(), shoppingCartItem);
         } else {
-            validateProductCount(count + shoppingCartItem.getCount());
+            validateTariffCount(count + shoppingCartItem.getCount());
             shoppingCartItem.setCount(shoppingCartItem.getCount() + count);
         }
         refreshStatistics();
     }
 
-    public void removeProduct(Integer idProduct, int count) {
-        ShoppingCartItem shoppingCartItem = tariffs.get(idProduct);
+    public void removeProduct(Integer tariffId, int count) {
+        ShoppingCartItem shoppingCartItem = tariffs.get(tariffId);
         if (shoppingCartItem != null) {
-            tariffs.remove(idProduct);
+            tariffs.remove(tariffId);
         }
         refreshStatistics();
 
@@ -52,15 +52,21 @@ public class ShoppingCart implements Serializable {
         return totalCost;
     }
 
-    private void validateProductCount(int count) {
-        if (count > Constants.MAX_TARIFF_COUNT_PER_ONE_SHOPPING_CART) {
-            throw new ValidationException("Limit for product count reached: count=" + count);
+    private void validateTariffByCategory(String category){
+        if (category != null){
+            throw  new ValidationException("You can choose only one tariff in this category!");
         }
     }
 
-    private void validateShoppingCartSize(int idProduct) {
+    private void validateTariffCount(int count) {
+        if (count > Constants.MAX_TARIFF_COUNT_PER_ONE_SHOPPING_CART) {
+            throw new ValidationException("You can choose only " + count + " tariff");
+        }
+    }
+
+    private void validateShoppingCartSize(int tariffId) {
         if (tariffs.size() > Constants.MAX_DIFFERENT_TARIFFS_PER_SHOPPING_CART ||
-                (tariffs.size() == Constants.MAX_DIFFERENT_TARIFFS_PER_SHOPPING_CART && !tariffs.containsKey(idProduct))) {
+                (tariffs.size() == Constants.MAX_DIFFERENT_TARIFFS_PER_SHOPPING_CART && !tariffs.containsKey(tariffId))) {
             throw new ValidationException("Limit for ShoppingCart size reached: size=" + tariffs.size());
         }
     }

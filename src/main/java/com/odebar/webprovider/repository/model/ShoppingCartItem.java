@@ -14,7 +14,6 @@ public class ShoppingCartItem implements Serializable {
     }
 
     public ShoppingCartItem(Tariff tariff, int count) {
-        super();
         this.tariff = tariff;
         this.count = count;
     }

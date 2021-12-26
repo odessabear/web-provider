@@ -12,7 +12,6 @@ import com.odebar.webprovider.services.OrderService;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 class OrderServiceImpl implements OrderService {
     private static final ResultSetHandler<Tariff> tariffResultSetHandler =
