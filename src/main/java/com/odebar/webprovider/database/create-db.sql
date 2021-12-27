@@ -103,7 +103,7 @@ CREATE TABLE tariffs
 INSERT INTO tariffs
 VALUES (DEFAULT, 'HomeNet', 'HomeNet Description', 'image_link', 155, 1); -- 1 (order id)
 INSERT INTO tariffs
-VALUES (DEFAULT, 'SpeedNet', 'SpeedNet Description', 'image_link', 1855, 1); -- 2
+VALUES (DEFAULT, 'SpeedNet', 'SpeedNet Description', 'image_link', 185, 1); -- 2
 INSERT INTO tariffs
 VALUES (DEFAULT, 'HighSpeedNet', 'HighSpeedNet Description', 'image_link', 220, 1);
 -- 3

@@ -2,7 +2,6 @@ package com.odebar.webprovider.filters;
 
 import com.odebar.webprovider.form.TariffForm;
 import com.odebar.webprovider.repository.model.ShoppingCart;
-import com.odebar.webprovider.repository.model.ShoppingCartItem;
 import com.odebar.webprovider.services.OrderService;
 import com.odebar.webprovider.services.serviceImpl.ServiceManager;
 import com.odebar.webprovider.util.SessionUtils;
@@ -31,8 +30,10 @@ public class AutoRestoreShoppingCartFilter extends AbstractFilter {
             if (!SessionUtils.isCurrentShoppingCartCreated(request)) {
                 Cookie cookie = SessionUtils.findShoppingCartCookie(request);
                 if (cookie != null) {
-                    ShoppingCart shoppingCart = shoppingCartFromString(cookie.getValue());
-                    SessionUtils.setCurrentShoppingCart(request, shoppingCart);
+                    ShoppingCart shoppingCart = orderService.deserializeShoppingCart(cookie.getValue());
+                    if (shoppingCart != null) {
+                        SessionUtils.setCurrentShoppingCart(request, shoppingCart);
+                    }
                 }
             }
             request.getSession().setAttribute(SHOPPING_CARD_DESERIALIZATION_DONE, Boolean.TRUE);
@@ -40,38 +41,4 @@ public class AutoRestoreShoppingCartFilter extends AbstractFilter {
 
         filterChain.doFilter(request, response);
     }
-
-    protected ShoppingCart shoppingCartFromString(String cookieValue) {
-        ShoppingCart shoppingCart = new ShoppingCart();
-        String[] items = cookieValue.split("\\|");
-        for (String item : items) {
-            String[] data = item.split("-");
-            try {
-                int idTariff = Integer.parseInt(data[0]);
-                int count = Integer.parseInt(data[1]);
-                orderService.addTariffToShoppingCart(new TariffForm(idTariff, count), shoppingCart);
-            } catch (RuntimeException e) {
-                e.printStackTrace();
-            }
-        }
-        return shoppingCart;
-    }
-
-//    protected String shoppingCartToString(ShoppingCart shoppingCart) {
-//        StringBuilder res = new StringBuilder();
-//        for (ShoppingCartItem shoppingCartItem : shoppingCart.getItems()) {
-//            res.append(shoppingCartItem.getTariff()).append("-").append(shoppingCartItem.getCount()).append("|");
-//        }
-//        if (res.length() > 0) {
-//            res.deleteCharAt(res.length() - 1);
-//        }
-//        return res.toString();
-//    }
-
-    /*
-    ShoppingCart shoppingCart = SessionUtils.getCurrentShoppingCart(req);
-            String cookieValue = shoppingCartToString(shoppingCart);
-            SessionUtils.updateCurrentShoppingCartCookie(cookieValue, resp);
-     */
-
 }

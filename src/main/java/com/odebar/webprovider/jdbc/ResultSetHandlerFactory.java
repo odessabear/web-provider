@@ -43,11 +43,14 @@ public class ResultSetHandlerFactory {
     }
 
     public static <T> ResultSetHandler<T> getSingleResultSetHandler(final ResultSetHandler<T> oneRowResultSetHandler) {
-        return rs -> {
-            if (rs.next()) {
-                return oneRowResultSetHandler.handle(rs);
-            } else {
-                return null;
+        return new ResultSetHandler<T>() {
+            @Override
+            public T handle(ResultSet rs) throws SQLException {
+                if (rs.next()) {
+                    return oneRowResultSetHandler.handle(rs);
+                } else {
+                    return null;
+                }
             }
         };
     }

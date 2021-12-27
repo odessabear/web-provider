@@ -2,6 +2,7 @@ package com.odebar.webprovider.servlet.page;
 
 import com.odebar.webprovider.servlet.AbstractController;
 import com.odebar.webprovider.util.RoutingUtils;
+import com.odebar.webprovider.util.SessionUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,10 @@ public class ShowShoppingCartController extends AbstractController {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RoutingUtils.forwardToPage("shopping-cart.jsp", req, resp);
+        if (SessionUtils.isCurrentShoppingCartCreated(req)) {
+            RoutingUtils.forwardToPage("shopping-cart.jsp", req, resp);
+        } else {
+            RoutingUtils.redirect("/tariffs", req, resp);
+        }
     }
 }

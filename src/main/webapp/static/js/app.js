@@ -32,18 +32,27 @@ $(function () {
     var addTariffToCart = function () {
         var idTariff = $('#addTariffPopup').attr('data-id-tariff');
         var count = $('#addTariffPopup .count').val();
-        $('#addToCart').addClass('hidden');
-        $('#addToCartIndicator').removeClass('hidden');
-        setTimeout(function () {
-            var data = {
-                totalCount: count,
-                totalCost: 2000
-            };
-            $('#currentShoppingCart .total-count').text(data.totalCount);
-            $('#currentShoppingCart .total-cost').text(data.totalCost);
-            $('#currentShoppingCart').removeClass('hidden');
-            $('#addTariffPopup').modal('hide');
-        }, 800);
+        var btn = $('#addToCart');
+        convertButtonToLoader(btn, 'btn-primary');
+        $.ajax({
+            url: '/ajax/json/tariff/add',
+            method: 'POST',
+            data: {
+                idTariff : idTariff,
+                count : count
+            },
+            success: function (data) {
+                $('#currentShoppingCart .total-count').text(data.totalCount);
+                $('#currentShoppingCart .total-cost').text(data.totalCost);
+                $('#currentShoppingCart').removeClass('hidden');
+                $('#addTariffPopup').modal('hide');
+            },
+            error: function (data) {
+                convertLoaderToButton(btn, 'btn-primary', addTariffToCart);
+                alert('Error');
+            }
+        });
+
     };
 
     var calculateCost = function () {
@@ -72,25 +81,25 @@ $(function () {
         btn.click(actionClick);
     };
 
-    var loadMoreTariffs = function (){
+    var loadMoreTariffs = function () {
         var btn = $('#loadMore');
         convertButtonToLoader(btn, 'btn-success');
         var pageNumber = parseInt($('#tariffsList').attr('data-page-number'));
         var url = '/ajax/html/more' + location.pathname + '?page=' + (pageNumber + 1) + '&' + location.search.substring(1);
         $.ajax({
-            url : url,
-            success : function(html) {
+            url: url,
+            success: function (html) {
                 $('#tariffsList .row').append(html);
                 pageNumber++;
                 var pageCount = parseInt($('#tariffsList').attr('data-page-count'));
                 $('#tariffsList').attr('data-page-number', pageNumber);
-                if(pageNumber < pageCount) {
+                if (pageNumber < pageCount) {
                     convertLoaderToButton(btn, 'btn-success', loadMoreTariffs);
                 } else {
                     btn.remove();
                 }
             },
-            error : function(data) {
+            error: function (data) {
                 convertLoaderToButton(btn, 'btn-success', loadMoreTariffs);
                 alert('Error');
             }
@@ -98,6 +107,10 @@ $(function () {
     };
 
 
+    //  $('#addToCart').addClass('hidden');
+    //         $('#addToCartIndicator').removeClass('hidden');
+    //
+    //
     // var initsortingForm = function() {
     //     $('#allTariffs').on("click", function() {
     //         $('.tariffs .sorting-option').prop('checked', $(this).is(':checked'));

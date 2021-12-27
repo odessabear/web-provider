@@ -8,12 +8,12 @@ import com.odebar.webprovider.repository.entity.Tariff;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ShoppingCart implements Serializable {
 
-    private final Map<Integer, ShoppingCartItem> tariffs = new HashMap<>();
+    private final Map<Integer, ShoppingCartItem> tariffs = new LinkedHashMap<>();
     private int totalCount = 0;
     private BigDecimal totalCost = BigDecimal.ZERO;
 
@@ -31,7 +31,7 @@ public class ShoppingCart implements Serializable {
         refreshStatistics();
     }
 
-    public void removeProduct(Integer tariffId, int count) {
+    public void removeTariff(Integer tariffId, int count) {
         ShoppingCartItem shoppingCartItem = tariffs.get(tariffId);
         if (shoppingCartItem != null) {
             tariffs.remove(tariffId);
@@ -52,15 +52,15 @@ public class ShoppingCart implements Serializable {
         return totalCost;
     }
 
-    private void validateTariffByCategory(String category){
-        if (category != null){
-            throw  new ValidationException("You can choose only one tariff in this category!");
+    private void validateTariffByCategory(String category) {
+        if (category != null) {
+            throw new ValidationException("You can choose only one tariff in this category!");
         }
     }
 
     private void validateTariffCount(int count) {
         if (count > Constants.MAX_TARIFF_COUNT_PER_ONE_SHOPPING_CART) {
-            throw new ValidationException("You can choose only " + count + " tariff");
+            throw new ValidationException("You can choose only " + (count - 1) + " tariff");
         }
     }
 

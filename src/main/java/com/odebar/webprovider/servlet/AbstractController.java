@@ -5,7 +5,6 @@ import com.odebar.webprovider.services.OrderService;
 import com.odebar.webprovider.services.TariffsService;
 import com.odebar.webprovider.services.serviceImpl.ServiceManager;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,7 +14,7 @@ public abstract class AbstractController extends HttpServlet {
     private OrderService orderService;
 
     @Override
-    public final void init() throws ServletException {
+    public final void init() {
         productService = ServiceManager.getInstance(getServletContext()).getTariffsService();
         orderService = ServiceManager.getInstance(getServletContext()).getOrderService();
     }
