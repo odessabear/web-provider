@@ -38,8 +38,8 @@ $(function () {
             url: '/ajax/json/tariff/add',
             method: 'POST',
             data: {
-                idTariff : idTariff,
-                count : count
+                idTariff: idTariff,
+                count: count
             },
             success: function (data) {
                 $('#currentShoppingCart .total-count').text(data.totalCount);
@@ -170,35 +170,38 @@ $(function () {
     var executeRemoveTariff = function (btn) {
         var idTariff = btn.attr('data-id-tariff');
         var count = btn.attr('data-count');
-        btn.removeClass('btn-danger');
-        btn.removeClass('btn');
-        btn.addClass('load-indicator');
-        var text = btn.text();
-        btn.text('');
-        btn.off('on', "click");
+        convertButtonToLoader(btn, 'btn-danger');
 
-        setTimeout(function () {
-            var data = {
-                totalCount: 1,
-                totalCost: 1
-            };
-            if (data.totalCount === 0) {
-                window.location.href = 'tariffs.html';
-            } else {
-                var prevCount = parseInt($('#tariff' + idTariff + ' .count').text());
-                var remCount = parseInt(count);
-                if (remCount === prevCount) {
-                    $('#tariff' + idTariff).remove();
-
-                    //
-                    if ($('#shoppingCart .item').length === 0) {
-                        window.location.href = 'tariffs.html';
+        $.ajax({
+            url: '/ajax/json/tariff/remove',
+            method: 'POST',
+            data: {
+                idTariff: idTariff,
+                count: count
+            },
+            success: function (data) {
+                if (data.totalCount == 0) {
+                    window.location.href = '/tariffs';
+                } else {
+                    var prevCount = parseInt($('#tariff' + idTariff + ' .count').text());
+                    var remCount = parseInt(count);
+                    if (remCount >= prevCount) {
+                        $('#tariff' + idTariff).remove();
+                    } else {
+                        convertLoaderToButton(btn, 'btn-danger', removeTariffFromCart);
+                        $('#tariff' + idTariff + ' .count').text(prevCount - remCount);
+                        if (prevCount - remCount == 1) {
+                            $('#tariff' + idTariff + ' a.remove-all').remove();
+                        }
                     }
-                    //
+                    refreshTotalCost();
                 }
-                refreshTotalCost();
+            },
+            error: function (data) {
+                convertLoaderToButton(btn, 'btn-danger', removeTariffFromCart);
+                alert('Error');
             }
-        }, 1000);
+        });
     }
 
     init();

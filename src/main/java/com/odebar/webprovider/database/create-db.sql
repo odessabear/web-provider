@@ -101,59 +101,59 @@ CREATE TABLE tariffs
 
 -- Internet
 INSERT INTO tariffs
-VALUES (DEFAULT, 'HomeNet', 'HomeNet Description', 'image_link', 155, 1); -- 1 (order id)
+VALUES (DEFAULT, 'HomeNet', 'HomeNet_Description', 'image_link', 155, 1); -- 1 (order id)
 INSERT INTO tariffs
-VALUES (DEFAULT, 'SpeedNet', 'SpeedNet Description', 'image_link', 185, 1); -- 2
+VALUES (DEFAULT, 'SpeedNet', 'SpeedNet_Description', 'image_link', 185, 1); -- 2
 INSERT INTO tariffs
-VALUES (DEFAULT, 'HighSpeedNet', 'HighSpeedNet Description', 'image_link', 220, 1);
+VALUES (DEFAULT, 'HighSpeedNet', 'HighSpeedNet_Description', 'image_link', 220, 1);
 -- 3
 -- Telephony
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Home60', 'Home60 Description', 'image_link', 70, 2); -- 4
+VALUES (DEFAULT, 'Home60', 'Home60_Description', 'image_link', 70, 2); -- 4
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Home100', 'Home100 Description', 'image_link', 110, 2); -- 5
+VALUES (DEFAULT, 'Home100', 'Home100_Description', 'image_link', 110, 2); -- 5
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Home300', 'Home300 Description', 'image_link', 130, 2);
+VALUES (DEFAULT, 'Home300', 'Home300_Description', 'image_link', 130, 2);
 -- 6
 -- IP-TV
 INSERT INTO tariffs
-VALUES (DEFAULT, 'IP-TV Basic', 'IP-TV Basic Description', 'image_link', 210, 3); -- 7
+VALUES (DEFAULT, 'IP-TV_Basic', 'IP-TV_Basic_Description', 'image_link', 210, 3); -- 7
 INSERT INTO tariffs
-VALUES (DEFAULT, 'IP-TV Advanced', 'IP-TV Advanced Description', 'image_link', 2300, 3);
+VALUES (DEFAULT, 'IP-TV_Advanced', 'IP-TV_Advanced_Description', 'image_link', 230, 3);
 -- 8
 -- Cable TV
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Standard TV', 'Standard TV Description', 'image_link', 160, 4); -- 9
+VALUES (DEFAULT, 'Standard_TV', 'Standard_TV_Description', 'image_link', 160, 4); -- 9
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Digital TV', 'Digital TV Description', 'image_link', 260, 4);
+VALUES (DEFAULT, 'Digital_TV', 'Digital_TV_Description', 'image_link', 260, 4);
 
 -- Internet
 INSERT INTO tariffs
-VALUES (DEFAULT, 'HomeNet_2', 'HomeNet_2 Description', 'image_link', 175, 1); -- 1 (order id)
+VALUES (DEFAULT, 'HomeNet_2', 'HomeNet_2_Description', 'image_link', 175, 1); -- 1 (order id)
 INSERT INTO tariffs
-VALUES (DEFAULT, 'SpeedNet_2', 'SpeedNet_2 Description', 'image_link', 205, 1); -- 2
+VALUES (DEFAULT, 'SpeedNet_2', 'SpeedNet_2_Description', 'image_link', 205, 1); -- 2
 INSERT INTO tariffs
-VALUES (DEFAULT, 'HighSpeedNet_2', 'HighSpeedNet_2 Description', 'image_link', 240, 1);
+VALUES (DEFAULT, 'HighSpeedNet_2', 'HighSpeedNet_2_Description', 'image_link', 240, 1);
 -- 3
 -- Telephony
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Home60_2', 'Home60_2 Description', 'image_link', 90, 2); -- 4
+VALUES (DEFAULT, 'Home60_2', 'Home60_2_Description', 'image_link', 90, 2); -- 4
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Home100_2', 'Home100_2 Description', 'image_link', 80, 2); -- 5
+VALUES (DEFAULT, 'Home100_2', 'Home100_2_Description', 'image_link', 80, 2); -- 5
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Home300_2', 'Home300_2 Description', 'image_link', 120, 2);
+VALUES (DEFAULT, 'Home300_2', 'Home300_2_Description', 'image_link', 120, 2);
 -- 6
 -- IP-TV
 INSERT INTO tariffs
-VALUES (DEFAULT, 'IP-TV Basic_2', 'IP-TV Basic_2 Description', 'image_link', 270, 3); -- 7
+VALUES (DEFAULT, 'IP-TV_Basic_2', 'IP-TV_Basic_2_Description', 'image_link', 270, 3); -- 7
 INSERT INTO tariffs
-VALUES (DEFAULT, 'IP-TV Advanced_2', 'IP-TV Advanced_2 Description', 'image_link', 220, 3);
+VALUES (DEFAULT, 'IP-TV_Advanced_2', 'IP-TV_Advanced_2_Description', 'image_link', 220, 3);
 -- 8
 -- Cable TV
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Standard TV_2', 'Standard TV_2 Description', 'image_link', 180, 4); -- 9
+VALUES (DEFAULT, 'Standard_TV_2', 'Standard TV_2_Description', 'image_link', 180, 4); -- 9
 INSERT INTO tariffs
-VALUES (DEFAULT, 'Digital TV_2', 'Digital TV_2 Description', 'image_link', 280, 4);
+VALUES (DEFAULT, 'Digital_TV_2', 'Digital_TV_2_Description', 'image_link', 280, 4);
 
 
 
